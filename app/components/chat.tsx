@@ -71,7 +71,7 @@ import Locale from "../locales";
 
 import { IconButton } from "./button";
 import styles from "./chat.module.scss";
-
+import IFrame from "./Iframe";
 import {
   List,
   ListItem,
@@ -1437,7 +1437,8 @@ function _Chat() {
                       {Locale.Chat.Typing}
                     </div>
                   )}
-                  <div className={styles["chat-message-item"]}>
+
+                  {/* <div className={styles["chat-message-item"]}>
                     <Markdown
                       content={getMessageTextContent(message)}
                       loading={
@@ -1484,8 +1485,59 @@ function _Chat() {
                         })}
                       </div>
                     )}
-                  </div>
-
+                  </div> */}
+                  {isUser ? (
+                    <div className={styles["chat-message-item"]}>
+                      <Markdown
+                        content={getMessageTextContent(message)}
+                        loading={
+                          (message.preview || message.streaming) &&
+                          message.content.length === 0 &&
+                          !isUser
+                        }
+                        onContextMenu={(e) => onRightClick(e, message)}
+                        onDoubleClickCapture={() => {
+                          if (!isMobileScreen) return;
+                          setUserInput(getMessageTextContent(message));
+                        }}
+                        fontSize={fontSize}
+                        parentRef={scrollRef}
+                        defaultShow={i >= messages.length - 6}
+                      />
+                      {getMessageImages(message).length == 1 && (
+                        <img
+                          className={styles["chat-message-item-image"]}
+                          src={getMessageImages(message)[0]}
+                          alt=""
+                        />
+                      )}
+                      {getMessageImages(message).length > 1 && (
+                        <div
+                          className={styles["chat-message-item-images"]}
+                          style={
+                            {
+                              "--image-count": getMessageImages(message).length,
+                            } as React.CSSProperties
+                          }
+                        >
+                          {getMessageImages(message).map((image, index) => {
+                            return (
+                              <img
+                                className={
+                                  styles["chat-message-item-image-multi"]
+                                }
+                                key={index}
+                                src={image}
+                                alt=""
+                              />
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <IFrame></IFrame>
+                  )}
                   <div className={styles["chat-message-action-date"]}>
                     {isContext
                       ? Locale.Chat.IsContext

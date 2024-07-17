@@ -68,6 +68,7 @@ export interface ChatSession {
 }
 
 export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
+
 export const BOT_HELLO: ChatMessage = createMessage({
   role: "assistant",
   content: Locale.Store.BotHello,
@@ -76,7 +77,7 @@ export const BOT_HELLO: ChatMessage = createMessage({
 function createEmptySession(): ChatSession {
   return {
     id: nanoid(),
-    topic: DEFAULT_TOPIC,
+    topic: "DEFAULT_TOPIC",
     memoryPrompt: "",
     messages: [],
     stat: {

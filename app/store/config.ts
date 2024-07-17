@@ -39,9 +39,9 @@ export const DEFAULT_CONFIG = {
   enableAutoGenerateTitle: true,
   sidebarWidth: DEFAULT_SIDEBAR_WIDTH,
 
-  disablePromptHint: false,
+  disablePromptHint: true,
 
-  dontShowMaskSplashScreen: false, // dont show splash screen when create chat
+  dontShowMaskSplashScreen: true, // dont show splash screen when create chat
   hideBuiltinMasks: false, // dont add builtin masks
 
   customModels: "",
@@ -50,7 +50,7 @@ export const DEFAULT_CONFIG = {
   modelConfig: {
     model: "gpt-3.5-turbo" as ModelType,
     providerName: "OpenAI" as ServiceProvider,
-    temperature: 0.5,
+    temperature: 0.1,
     top_p: 1,
     max_tokens: 4000,
     presence_penalty: 0,
@@ -138,6 +138,7 @@ export const useAppConfig = createPersistStore(
     version: 3.9,
     migrate(persistedState, version) {
       const state = persistedState as ChatConfig;
+      console.log("state", state);
 
       if (version < 3.4) {
         state.modelConfig.sendMemory = true;

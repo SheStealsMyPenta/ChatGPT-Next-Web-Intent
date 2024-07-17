@@ -161,7 +161,11 @@ export function SideBar(props: { className?: string }) {
           Build your own AI assistant.
         </div>
         <div className={styles["sidebar-logo"] + " no-dark"}>
-          <ChatGptIcon />
+          <ChatGptIcon
+            onClick={() => {
+              // alert(1)
+            }}
+          />
         </div>
       </div>
 
